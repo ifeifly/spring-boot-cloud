@@ -1,0 +1,4 @@
+#业务处理时长
+biz:
+  process:
+    seconds: 30
