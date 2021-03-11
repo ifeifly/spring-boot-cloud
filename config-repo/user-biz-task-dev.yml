@@ -1,4 +1,11 @@
-#业务处理时长
+spring:
+  cloud:
+    task:
+      #不允许并发执行
+      single-instance-enabled: true
+      #task执行完毕时关闭上下文
+      closecontext-enabled: true
+#业务处理时长,模拟业务耗时
 biz:
   process:
     seconds: 30
