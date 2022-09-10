@@ -16,7 +16,7 @@
     <name>${project.artifactId}</name>
 
     <dependencies>
-        <!--swagger-->
+        <!--swagger.微服务中swagger配置方法参数官方demo:https://github.com/springdoc/springdoc-openapi-demos/tree/master/springdoc-openapi-microservices-->
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-webflux-ui</artifactId>

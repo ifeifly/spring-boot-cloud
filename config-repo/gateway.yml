@@ -12,13 +12,26 @@ spring:
         locator:
           enabled: true
       routes:
-        - id: service_a
+        - id: svca-service
           uri: lb://svca-service
           predicates:
-            - Path=/hello/**
+            - Path=/svca/**
           filters:
             - StripPrefix=1
-
+        - id: svcb-service
+          uri: lb://svcb-service
+          predicates:
+            - Path=/svcb/**
+          filters:
+            - StripPrefix=1
+        - id: openapi
+          uri: http://localhost:${server.port}
+          predicates:
+            - Path=/v3/api-docs/**
+          filters:
+            - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs
+      default-filters:
+        - StripPrefix=1
 hystrix:
   command:
     default:
@@ -31,8 +44,11 @@ ribbon:
   ReadTimeout: 10000
   ConnectTimeout: 10000
 springdoc:
-  api-docs:
-    enabled: true
   swagger-ui:
-    enabled: true
-    use-root-path: true
+    urls:
+      - name: gateway
+        url: /v3/api-docs
+      - name: svca
+        url: /v3/api-docs/svca
+      - name: svcb
+        url: /v3/api-docs/svcb
