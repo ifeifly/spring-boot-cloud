@@ -24,6 +24,8 @@ spec:
           env:
             - name: SW_OAP_ADDRESS
               value: skywalking-oap-server:12800
+            - name: TZ
+              value: Asia/Shanghai
 ---
 #-----------------定义skywalking-ui的代理服务--------------
 apiVersion: v1

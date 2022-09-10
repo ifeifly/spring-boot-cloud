@@ -21,6 +21,9 @@ spec:
               name: grpc
             - containerPort: 12800
               name: rest
+          env:
+            - name: TZ
+              value: Asia/Shanghai
 ---
 #-----------------定义skywalking的代理服务--------------
 apiVersion: v1
