@@ -30,3 +30,6 @@ hystrix:
 ribbon:
   ReadTimeout: 10000
   ConnectTimeout: 10000
+springdoc:
+  swagger-ui:
+    use-root-path: true
