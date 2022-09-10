@@ -20,7 +20,7 @@ spec:
     spec:
       initContainers:
         - name: init-skywalking-agent
-          image: ccr.ccs.tencentyun.com/haiyang/skywalking-agent:7.0.0
+          image: apache/skywalking-java-agent:8.12.0-java8
           command:
             - 'sh'
             - '-c'
@@ -90,7 +90,7 @@ spec:
     spec:
       initContainers:
         - name: init-skywalking-agent
-          image: ccr.ccs.tencentyun.com/haiyang/skywalking-agent:7.0.0
+          image: apache/skywalking-java-agent:8.12.0-java8
           command:
             - 'sh'
             - '-c'
@@ -147,7 +147,7 @@ spec:
     spec:
       initContainers:
         - name: init-skywalking-agent
-          image: ccr.ccs.tencentyun.com/haiyang/skywalking-agent:7.0.0
+          image: apache/skywalking-java-agent:8.12.0-java8
           command:
             - 'sh'
             - '-c'
@@ -204,7 +204,7 @@ spec:
     spec:
       initContainers:
         - name: init-skywalking-agent
-          image: ccr.ccs.tencentyun.com/haiyang/skywalking-agent:7.0.0
+          image: apache/skywalking-java-agent:8.12.0-java8
           command:
             - 'sh'
             - '-c'
@@ -261,7 +261,7 @@ spec:
     spec:
       initContainers:
         - name: init-skywalking-agent
-          image: ccr.ccs.tencentyun.com/haiyang/skywalking-agent:7.0.0
+          image: apache/skywalking-java-agent:8.12.0-java8
           command:
             - 'sh'
             - '-c'
@@ -318,7 +318,7 @@ spec:
     spec:
       initContainers:
         - name: init-skywalking-agent
-          image: ccr.ccs.tencentyun.com/haiyang/skywalking-agent:7.0.0
+          image: apache/skywalking-java-agent:8.12.0-java8
           command:
             - 'sh'
             - '-c'
@@ -393,7 +393,7 @@ spec:
     spec:
       initContainers:
         - name: init-skywalking-agent
-          image: ccr.ccs.tencentyun.com/haiyang/skywalking-agent:7.0.0
+          image: apache/skywalking-java-agent:8.12.0-java8
           command:
             - 'sh'
             - '-c'
@@ -469,7 +469,7 @@ spec:
     spec:
       initContainers:
         - name: init-skywalking-agent
-          image: ccr.ccs.tencentyun.com/haiyang/skywalking-agent:7.0.0
+          image: apache/skywalking-java-agent:8.12.0-java8
           command:
             - 'sh'
             - '-c'
