@@ -16,14 +16,14 @@ spec:
     spec:
       containers:
         - name: skywalking-ui
-          image: apache/skywalking-ui:latest
+          image: apache/skywalking-ui:9.2.0
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
               name: httpport
           env:
             - name: SW_OAP_ADDRESS
-              value: skywalking-oap-server:12800
+              value: http://skywalking-oap-server:12800
             - name: TZ
               value: Asia/Shanghai
 ---
@@ -39,7 +39,8 @@ spec:
     - port: 8080
       name: httpport
       targetPort: 8080
-  type: ClusterIP
+      nodePort: 31068
+  type: NodePort
   selector:
     app: skywalking-ui
 ---
