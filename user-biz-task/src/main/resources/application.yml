@@ -1,0 +1,11 @@
+spring:
+  cloud:
+    task:
+      single-instance-enabled: true
+      closecontext-enabled: true
+management:
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+

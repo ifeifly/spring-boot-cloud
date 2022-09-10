@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: svca-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: svca-service
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: svca-service
+    spec:
+      containers:
+        - image: ccr.ccs.tencentyun.com/spring-boot-cloud/svca-service:v6
+          imagePullPolicy: Always
+          name: svca-service
+          ports:
+            - containerPort: 30880
+              protocol: TCP
+          lifecycle:
+            preStop:
+              exec:
+                command: ["sh", "-c", "sleep 36"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svca-service
+spec:
+  type: NodePort
+  ports:
+    - name: http
+      port: 30880
+      protocol: TCP
+      nodePort: 30880
+      targetPort: 30880
+  selector:
+    app: svca-service

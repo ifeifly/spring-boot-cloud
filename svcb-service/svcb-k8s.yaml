@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: svcb-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: svcb-service
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: svcb-service
+    spec:
+      containers:
+        - image: ccr.ccs.tencentyun.com/spring-boot-cloud/svcb-service:v6
+          imagePullPolicy: Always
+          name: svcb-service
+          ports:
+            - containerPort: 30870
+              protocol: TCP
+          lifecycle:
+            preStop:
+              exec:
+                command: ["sh", "-c", "sleep 36"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svcb-service
+spec:
+  type: NodePort
+  ports:
+    - name: http
+      port: 30870
+      protocol: TCP
+      nodePort: 30870
+      targetPort: 30870
+  selector:
+    app: svcb-service
