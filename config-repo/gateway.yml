@@ -31,5 +31,8 @@ ribbon:
   ReadTimeout: 10000
   ConnectTimeout: 10000
 springdoc:
+  api-docs:
+    enabled: true
   swagger-ui:
+    enabled: true
     use-root-path: true
