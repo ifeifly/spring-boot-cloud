@@ -1,6 +1,6 @@
 package cn.zhangxd.monitor;
 
-import de.codecentric.boot.admin.config.EnableAdminServer;
+//import de.codecentric.boot.admin.config.EnableAdminServer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -10,7 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableAdminServer
+//@EnableAdminServer
 public class MonitorApplication {
 
     public static void main(String[] args) {
