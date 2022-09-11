@@ -1,5 +1,5 @@
 server:
-  port: 8060
+  port: 30080
 
 management:
   security:
@@ -17,21 +17,19 @@ spring:
           predicates:
             - Path=/svca/**
           filters:
-            - StripPrefix=1
+            - StripPrefix=0
         - id: svcb-service
           uri: lb://svcb-service
           predicates:
             - Path=/svcb/**
           filters:
-            - StripPrefix=1
+            - StripPrefix=0
         - id: openapi
           uri: http://localhost:${server.port}
           predicates:
             - Path=/v3/api-docs/**
           filters:
             - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs
-      default-filters:
-        - StripPrefix=1
 hystrix:
   command:
     default:

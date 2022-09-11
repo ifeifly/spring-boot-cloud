@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: svcb-service
+  name: config
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: svcb-service
+      app: config
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -15,7 +15,7 @@ spec:
   template:
     metadata:
       labels:
-        app: svcb-service
+        app: config
     spec:
       initContainers:
         - name: init-skywalking-agent
@@ -28,34 +28,30 @@ spec:
             - mountPath: /vmskywalking/agent
               name: skywalking-agent
       containers:
-        - image: haiyanggroup-docker.pkg.coding.net/spring-boot-cloud/svcb-service/svcb-service:master-202209111704
+        - image: haiyanggroup-docker.pkg.coding.net/spring-boot-cloud/config/config:master-202209111517
           imagePullPolicy: Always
-          name: svcb-service
+          name: config
           ports:
-            - containerPort: 30870
+            - containerPort: 8888
               protocol: TCP
           volumeMounts:
             - mountPath: /opt/skywalking/agent
               name: skywalking-agent
-          lifecycle:
-            preStop:
-              exec:
-                command: ["sh", "-c", "sleep 36"]
       volumes:
         - name: skywalking-agent
-          emptyDir: { }
+          emptyDir: {}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: svcb-service
+  name: config
 spec:
   type: NodePort
   ports:
     - name: http
-      port: 30870
+      port: 30876
       protocol: TCP
-      nodePort: 30870
-      targetPort: 30870
+      targetPort: 30876
+      nodePort: 31018
   selector:
-    app: svcb-service
+    app: config

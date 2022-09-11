@@ -2,6 +2,10 @@ ribbon:
   ReadTimeout: 5000
   ConnectTimeout: 5000
 
+logging:
+  level:
+    root: debug
+
 feign:
   hystrix:
     enabled: true

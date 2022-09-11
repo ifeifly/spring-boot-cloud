@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: svcb-service
+  name: gateway
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: svcb-service
+      app: gateway
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -15,7 +15,7 @@ spec:
   template:
     metadata:
       labels:
-        app: svcb-service
+        app: gateway
     spec:
       initContainers:
         - name: init-skywalking-agent
@@ -28,34 +28,35 @@ spec:
             - mountPath: /vmskywalking/agent
               name: skywalking-agent
       containers:
-        - image: haiyanggroup-docker.pkg.coding.net/spring-boot-cloud/svcb-service/svcb-service:master-202209111704
+        - image: haiyanggroup-docker.pkg.coding.net/spring-boot-cloud/gateway/gateway:master-202209111656
           imagePullPolicy: Always
-          name: svcb-service
+          name: gateway
           ports:
-            - containerPort: 30870
+            - containerPort: 30080
               protocol: TCP
+          env:
+            - name: SKYWALKING_ADDR
+              value: skywalking-oap-server
+            - name: APP_ID
+              value: gateway
           volumeMounts:
             - mountPath: /opt/skywalking/agent
               name: skywalking-agent
-          lifecycle:
-            preStop:
-              exec:
-                command: ["sh", "-c", "sleep 36"]
       volumes:
         - name: skywalking-agent
-          emptyDir: { }
+          emptyDir: {}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: svcb-service
+  name: gateway
 spec:
   type: NodePort
   ports:
     - name: http
-      port: 30870
+      port: 30080
       protocol: TCP
-      nodePort: 30870
-      targetPort: 30870
+      targetPort: 30080
+      nodePort: 30080
   selector:
-    app: svcb-service
+    app: gateway
