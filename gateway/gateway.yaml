@@ -20,13 +20,11 @@ spec:
       initContainers:
         - name: init-skywalking-agent
           image: apache/skywalking-java-agent:8.12.0-java8
-          command:
-            - 'sh'
-            - '-c'
-            - 'set -ex;mkdir -p /vmskywalking/agent;cp -r /skywalking/agent/* /vmskywalking/agent;'
           volumeMounts:
-            - mountPath: /vmskywalking/agent
-              name: skywalking-agent
+            - name: skywalking-agent
+              mountPath: /agent
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /skywalking/agent /agent/" ]
       containers:
         - image: haiyanggroup-docker.pkg.coding.net/spring-boot-cloud/gateway/gateway:master-202209111656
           imagePullPolicy: Always
@@ -35,13 +33,15 @@ spec:
             - containerPort: 30080
               protocol: TCP
           env:
-            - name: SKYWALKING_ADDR
-              value: skywalking-oap-server
-            - name: APP_ID
-              value: gateway
+            - name: JAVA_TOOL_OPTIONS
+              value: "-javaagent:/skywalking/agent/skywalking-agent.jar"
+            - name: SW_AGENT_NAME
+              value: "gateway"
+            - name: SW_AGENT_COLLECTOR_BACKEND_SERVICES
+              value: "skywalking-oap-server:11800"
           volumeMounts:
-            - mountPath: /opt/skywalking/agent
-              name: skywalking-agent
+            - name: skywalking-agent
+              mountPath: /skywalking
       volumes:
         - name: skywalking-agent
           emptyDir: {}

@@ -20,13 +20,11 @@ spec:
       initContainers:
         - name: init-skywalking-agent
           image: apache/skywalking-java-agent:8.12.0-java8
-          command:
-            - 'sh'
-            - '-c'
-            - 'set -ex;mkdir -p /vmskywalking/agent;cp -r /skywalking/agent/* /vmskywalking/agent;'
           volumeMounts:
-            - mountPath: /vmskywalking/agent
-              name: skywalking-agent
+            - name: skywalking-agent
+              mountPath: /agent
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /skywalking/agent /agent/" ]
       containers:
         - image: haiyanggroup-docker.pkg.coding.net/spring-boot-cloud/svcb-service/svcb-service:master-202209111704
           imagePullPolicy: Always
@@ -34,16 +32,19 @@ spec:
           ports:
             - containerPort: 30870
               protocol: TCP
+          env:
+            - name: JAVA_TOOL_OPTIONS
+              value: "-javaagent:/skywalking/agent/skywalking-agent.jar"
+            - name: SW_AGENT_NAME
+              value: "svca-service"
+            - name: SW_AGENT_COLLECTOR_BACKEND_SERVICES
+              value: "skywalking-oap-server:11800"
           volumeMounts:
-            - mountPath: /opt/skywalking/agent
-              name: skywalking-agent
-          lifecycle:
-            preStop:
-              exec:
-                command: ["sh", "-c", "sleep 36"]
+            - name: skywalking-agent
+              mountPath: /skywalking
       volumes:
         - name: skywalking-agent
-          emptyDir: { }
+          emptyDir: {}
 ---
 apiVersion: v1
 kind: Service

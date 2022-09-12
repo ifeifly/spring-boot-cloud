@@ -13,7 +13,7 @@ spec:
         app: skywalking-oap-server
     spec:
       containers:
-        - image: apache/skywalking-oap-server:8.9.1
+        - image: apache/skywalking-oap-server:9.2.0
           imagePullPolicy: IfNotPresent
           name: skywalking-oap-server
           ports:
