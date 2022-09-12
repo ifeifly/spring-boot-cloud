@@ -1,5 +1,7 @@
 package cn.zhangxd.svcb.controller;
 
+import lombok.extern.slf4j.Slf4j;
+import org.apache.skywalking.apm.toolkit.trace.TraceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@Slf4j
 @RefreshScope
 @RestController
 public class ServiceBController {
@@ -30,6 +33,7 @@ public class ServiceBController {
                 sb.append(serviceInstance.getServiceId() + " (" + serviceInstance.getHost() + ":" + serviceInstance.getPort() + ")" + "===>[][i am v5][i am v5][i am v5][]Say " + msg);
             }
         }
+        log.info("[printServiceB] tid:{} segmentId:{} spanId:{}", TraceContext.traceId(), TraceContext.segmentId(), TraceContext.spanId());
         return "i am svcb-service" + sb.toString();
     }
 }

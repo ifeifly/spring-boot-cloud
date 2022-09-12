@@ -1,6 +1,10 @@
 package cn.zhangxd.svca.controller;
 
 import cn.zhangxd.svca.client.ServiceBClient;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.skywalking.apm.toolkit.trace.Tag;
+import org.apache.skywalking.apm.toolkit.trace.Trace;
+import org.apache.skywalking.apm.toolkit.trace.TraceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
@@ -16,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+@Slf4j
 @RefreshScope
 @RestController
 public class ServiceAController {
@@ -54,6 +59,8 @@ public class ServiceAController {
             System.out.println(line);
             stringBuilder.append(line);
         }
+        log.info("[getEnv] tid:{} segmentId:{} spanId:{}", TraceContext.traceId(), TraceContext.segmentId(), TraceContext.spanId());
+        log.info("[getEnv] info:{}", stringBuilder.toString());
         return stringBuilder.toString();
     }
 
@@ -65,10 +72,11 @@ public class ServiceAController {
         for (ServiceInstance instance : instances) {
             sb.append("uri:" + instance.getUri() + " host:" + instance.getHost() + " port:" + instance.getPort());
         }
-
+        log.info("[getInstances] info:{}", sb.toString());
         return "result,instances:" + instances.toString() + " list:" + sb.toString();
     }
 
+    @Trace
     @GetMapping(value = "/")
     public String printServiceA() {
         List<String> services = discoveryClient.getServices();
@@ -76,13 +84,16 @@ public class ServiceAController {
             List<ServiceInstance> instances = discoveryClient.getInstances(service);
             System.out.println("------------" + service + "--------------");
             for (ServiceInstance instance : instances) {
-                System.out.println("serviceName:" + service + ";instances:" + instance.getHost() + " port:" + instance.getPort());
+                log.info("[printServiceA] serviceName:{} instances:{} port:{}", service, instance.getHost(), instance.getPort());
             }
         }
+        log.info("[printServiceA] tid:{} segmentId:{} spanId:{}", TraceContext.traceId(), TraceContext.segmentId(), TraceContext.spanId());
         return "result:" + serviceBClient.printServiceB();
     }
 
-
+    @Trace
+    @Tag(key = "mytag1", value = "arg[0]")
+    @Tag(key = "result", value = "returnedObj")
     @GetMapping(path = "/test")
     public String test(String param) {
         return "param" + param;
