@@ -26,7 +26,7 @@ spec:
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /skywalking/agent /agent/" ]
       containers:
-        - image: haiyanggroup-docker.pkg.coding.net/spring-boot-cloud/svca-service/svca-service:master-202209111700
+        - image: haiyanggroup-docker.pkg.coding.net/spring-boot-cloud/svca-service/svca-service:master-202209121521
           imagePullPolicy: Always
           name: svca-service
           ports:

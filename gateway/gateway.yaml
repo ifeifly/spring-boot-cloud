@@ -26,7 +26,7 @@ spec:
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /skywalking/agent /agent/" ]
       containers:
-        - image: haiyanggroup-docker.pkg.coding.net/spring-boot-cloud/gateway/gateway:master-202209111656
+        - image: haiyanggroup-docker.pkg.coding.net/spring-boot-cloud/gateway/gateway:master-202209121517
           imagePullPolicy: Always
           name: gateway
           ports:
