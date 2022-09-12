@@ -32,6 +32,7 @@
         <spring.cloud.version>2021.0.4</spring.cloud.version>
         <spring-boot-admin.version>1.5.4</spring-boot-admin.version>
         <fabric8.maven.plugin.version>4.4.1</fabric8.maven.plugin.version>
+        <skywalking.version>8.12.0</skywalking.version>
     </properties>
 
     <dependencies>
@@ -68,6 +69,16 @@
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-webflux-ui</artifactId>
                 <version>1.6.11</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.skywalking</groupId>
+                <artifactId>apm-toolkit-trace</artifactId>
+                <version>${skywalking.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.skywalking</groupId>
+                <artifactId>apm-toolkit-logback-1.x</artifactId>
+                <version>${skywalking.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

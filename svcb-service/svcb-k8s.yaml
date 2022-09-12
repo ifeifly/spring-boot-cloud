@@ -36,7 +36,7 @@ spec:
             - name: JAVA_TOOL_OPTIONS
               value: "-javaagent:/skywalking/agent/skywalking-agent.jar"
             - name: SW_AGENT_NAME
-              value: "svca-service"
+              value: "svcb-service"
             - name: SW_AGENT_COLLECTOR_BACKEND_SERVICES
               value: "skywalking-oap-server:11800"
           volumeMounts:
